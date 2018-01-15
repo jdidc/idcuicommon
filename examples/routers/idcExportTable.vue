@@ -7,10 +7,9 @@
             <div style="margin-top: 10px;">
                 <Input v-model="condition.code" style="display:inline-block;"/>
             </div>
-            
         </div>
 
-        <idc-export-table
+        <idc-table
             @on-sort-change="sortChange"
             @on-select="selectChange"
             @on-row-click="onRowClick"
@@ -25,7 +24,25 @@
             :columns="columns1"
             highlight-row
         >
-        </idc-export-table>
+        </idc-table>
+
+         <idc-table
+            @on-sort-change="sortChange"
+            @on-select="selectChange"
+            @on-row-click="onRowClick"
+            @on-data-callback="callback"
+            ref="table" 
+            border
+            :toolsOpen="true"
+            stripe
+            :exportPageSize="10"
+            :data="data"
+            :url="url"
+            :condition="condition"
+            :columns="columns1"
+            highlight-row
+        >
+        </idc-table>
     </div>
 </template>
 <script>
@@ -36,6 +53,59 @@ export default {
             condition: {
                 code: ''
             },
+            data:[{
+                status: 1,
+                created_at: '12312334',
+                type_name: 'address'
+            },{
+                status: 1,
+                created_at: '123123',
+                type_name: 'address'
+            },{
+                status: 1,
+                created_at: '123123',
+                type_name: 'address'
+            },{
+                status: 1,
+                created_at: '123123',
+                type_name: 'address'
+            },{
+                status: 1,
+                created_at: '123123',
+                type_name: 'address'
+            },{
+                status: 1,
+                created_at: '123123',
+                type_name: 'address'
+            },{
+                status: 1,
+                created_at: '123123',
+                type_name: 'address'
+            },{
+                status: 1,
+                created_at: '123123',
+                type_name: 'address'
+            },{
+                status: 1,
+                created_at: '123123',
+                type_name: 'address'
+            },{
+                status: 1,
+                created_at: '123123',
+                type_name: 'address'
+            },{
+                status: 1,
+                created_at: '123123',
+                type_name: 'adsf'
+            },{
+                status: 1,
+                created_at: '123123',
+                type_name: 'asdf'
+            },{
+                status: 1,
+                created_at: '123123',
+                type_name: 'dff'
+            }],
             columns1: [
                 {
                     title: '序号',

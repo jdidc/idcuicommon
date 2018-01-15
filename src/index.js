@@ -4,7 +4,7 @@ import testButton from './components/testButton';
 
 const components = {
     testButton,
-    idcExportTable,
+    idcTable: idcExportTable,
     idcExportButton
 };
 

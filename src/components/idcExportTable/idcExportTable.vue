@@ -19,15 +19,15 @@
                         <h4>{{page.total}}</h4>
                     </strong>
                 </p>
+                
                 <p>已导出数据量：
                     <strong>
                         <h4>{{dataArr.length}}</h4>
                     </strong>
                 </p>
                 <Progress :percent="percent|numberFormat"></Progress>
-
                 <div slot="footer">
-                    <Button :loading="modalLoading"  type="primary" @click="getDataByPage">导出csv</Button>
+                    <Button :loading="modalLoading"  type="primary" @click="clientExport">导出csv</Button>
                 </div>
             </Modal>
             
@@ -40,7 +40,7 @@
         </div>
 
         <Table ref="grid" 
-            :data="data" 
+            :data="tableData"
             :columns="columns" 
             :stripe="stripe" 
             :border="border" 
@@ -76,9 +76,23 @@
         </Table>
 
         <div class="page-wrapper">
+            <!-- 服务端分页 -->
             <Page 
+                v-if="data.length === 0"
                 @on-page-size-change="pageSizeChange" 
                 @on-change="getData" 
+                :current.sync="page.currentPage" 
+                :total="page.total" 
+                show-total 
+                show-elevator 
+                show-sizer
+            ></Page>
+
+            <!-- 本地分页 -->
+            <Page 
+                v-else
+                @on-page-size-change="pageSizeChange" 
+                @on-change="getClientDataByPage" 
                 :current.sync="page.currentPage" 
                 :total="page.total" 
                 show-total 
@@ -97,6 +111,11 @@ export default {
     name: 'idcExportTable',
     mixins: [methods],
     props: {
+        data: {
+            default() {
+                return [];
+            }
+        },
         url: {
             required: true
         },
@@ -181,7 +200,7 @@ export default {
     },
     data() {
         return {
-            data: [],
+            tableData: [],
             showTools: false,
             page: {
                 total: 0,
@@ -213,9 +232,9 @@ export default {
                     params: data
                 })
                 .then(resp => {
-                    this.data = resp.data.data;
+                    this.tableData = resp.data.data;
                     this.page.total = resp.data.total;
-                    this.$emit('on-data-callback', resp)
+                    this.$emit('on-data-callback', resp);
                 });
         },
         // 重置
@@ -300,10 +319,47 @@ export default {
             });
         },
 
+        // 客户端导出
+        clientExport() {
+            this.dataArr = this.data;
+            this.percent = 100;
+            setTimeout(() => {
+                this.exportData({
+                    columns: this.columns,
+                    data: this.data
+                });
+            }, 200);
+
+            setTimeout(() => {
+                this.showExportModal = false;
+                this.reset();
+            }, 2000);
+        },
+
+        // 本地分页
+        getClientDataByPage() {
+            let dataLength = this.data.length;
+            this.page.total = dataLength;
+            if (this.page.pageSize < dataLength) {
+                let startIndex =
+                    this.page.pageSize * (this.page.currentPage - 1);
+                this.tableData = this.data.slice(
+                    startIndex,
+                    startIndex + this.page.pageSize
+                );
+            } else {
+                this.tableData = this.data;
+            }
+        },
+
         // page组件的pageSize大小改变后的处理
         pageSizeChange(pageSize) {
             this.page.pageSize = pageSize;
-            this.getData();
+            if (this.data.length === 0) {
+                this.getData();
+            } else {
+                this.getClientDataByPage();
+            }
         },
         toggleTools() {
             this.showTools = !this.showTools;
@@ -340,7 +396,13 @@ export default {
         }
     },
     created() {
-        this.getData();
+        if (this.data.length === 0) {
+            this.getData();
+        } else {
+            // this.tableData = this.data;
+            // this.page.total = this.data.length;
+            this.getClientDataByPage();
+        }
         this.showSlotFooter = this.$slots.footer !== undefined;
         this.showSlotHeader = this.$slots.header !== undefined;
     },
@@ -348,18 +410,36 @@ export default {
         // 这样可以遍历condition对象的每个属性
         condition: {
             handler() {
-                this.getData();
+                if (this.data.length === 0) {
+                    this.getData();
+                }
+            },
+            deep: true
+        },
+        data: {
+            handler() {
+                if (this.data.length !== 0) {
+                    // this.tableData = this.data;
+                    this.getClientDataByPage();
+                }
             },
             deep: true
         },
         columns: {
             handler() {
-                this.getData();
+                if (this.data.length === 0) {
+                    this.getData();
+                } else {
+                    // this.tableData = this.data;
+                    this.getClientDataByPage();
+                }
             },
             deep: true
         },
         url() {
-            this.getData();
+            if (this.data.length === 0) {
+                this.getData();
+            }
         }
     },
     filters: {

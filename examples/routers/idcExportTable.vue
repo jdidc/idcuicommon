@@ -20,6 +20,7 @@
             stripe
             :exportPageSize="10"
             :url="url"
+            type="server"
             :condition="condition"
             :columns="columns1"
             highlight-row
@@ -27,20 +28,10 @@
         </idc-table>
 
          <idc-table
-            @on-sort-change="sortChange"
-            @on-select="selectChange"
-            @on-row-click="onRowClick"
-            @on-data-callback="callback"
+            style="margin-top: 10px;"
             ref="table" 
-            border
-            :toolsOpen="true"
-            stripe
-            :exportPageSize="10"
             :data="data"
-            :url="url"
-            :condition="condition"
             :columns="columns1"
-            highlight-row
         >
         </idc-table>
     </div>

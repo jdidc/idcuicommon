@@ -78,7 +78,7 @@
         <div class="page-wrapper">
             <!-- 服务端分页 -->
             <Page 
-                v-if="data.length === 0"
+                v-if="type === 'server'"
                 @on-page-size-change="pageSizeChange" 
                 @on-change="getData" 
                 :current.sync="page.currentPage" 
@@ -90,7 +90,7 @@
 
             <!-- 本地分页 -->
             <Page 
-                v-else
+                v-else-if="pagination"
                 @on-page-size-change="pageSizeChange" 
                 @on-change="getClientDataByPage" 
                 :current.sync="page.currentPage" 
@@ -111,16 +111,26 @@ export default {
     name: 'idcExportTable',
     mixins: [methods],
     props: {
+        type: {
+            type: String,
+            // client | server
+            default: 'client'
+        },
         data: {
             default() {
                 return [];
             }
         },
+        // 是否显示分页组件
+        pagination: {
+            type: Boolean,
+            default: false
+        },
         url: {
-            required: true
+            type: String
         },
         condition: {
-            default: {}
+            type:Object
         },
         toolsOpen: {
             default: false
@@ -340,7 +350,7 @@ export default {
         getClientDataByPage() {
             let dataLength = this.data.length;
             this.page.total = dataLength;
-            if (this.page.pageSize < dataLength) {
+            if (this.page.pageSize < dataLength && this.pagination) {
                 let startIndex =
                     this.page.pageSize * (this.page.currentPage - 1);
                 this.tableData = this.data.slice(
@@ -355,7 +365,7 @@ export default {
         // page组件的pageSize大小改变后的处理
         pageSizeChange(pageSize) {
             this.page.pageSize = pageSize;
-            if (this.data.length === 0) {
+            if (this.type === 'server') {
                 this.getData();
             } else {
                 this.getClientDataByPage();
@@ -396,11 +406,9 @@ export default {
         }
     },
     created() {
-        if (this.data.length === 0) {
+        if (this.type === 'server') {
             this.getData();
         } else {
-            // this.tableData = this.data;
-            // this.page.total = this.data.length;
             this.getClientDataByPage();
         }
         this.showSlotFooter = this.$slots.footer !== undefined;
@@ -410,7 +418,7 @@ export default {
         // 这样可以遍历condition对象的每个属性
         condition: {
             handler() {
-                if (this.data.length === 0) {
+                if (this.type === 'server') {
                     this.getData();
                 }
             },
@@ -418,8 +426,7 @@ export default {
         },
         data: {
             handler() {
-                if (this.data.length !== 0) {
-                    // this.tableData = this.data;
+                if (this.type === 'client') {
                     this.getClientDataByPage();
                 }
             },
@@ -427,17 +434,16 @@ export default {
         },
         columns: {
             handler() {
-                if (this.data.length === 0) {
+                if (this.type === 'server') {
                     this.getData();
                 } else {
-                    // this.tableData = this.data;
                     this.getClientDataByPage();
                 }
             },
             deep: true
         },
         url() {
-            if (this.data.length === 0) {
+            if (this.type === 'server') {
                 this.getData();
             }
         }

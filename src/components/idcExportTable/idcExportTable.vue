@@ -26,8 +26,9 @@
                     </strong>
                 </p>
                 <Progress :percent="percent|numberFormat"></Progress>
-                <div slot="footer">
-                    <Button :loading="modalLoading"  type="primary" @click="clientExport">导出csv</Button>
+                <div slot="footer">                    
+                    <Button v-if="type === 'server'" :loading="modalLoading"  type="primary" @click="getDataByPage">导出csv</Button>
+                    <Button v-else :loading="modalLoading"  type="primary" @click="clientExport">导出csv</Button>
                 </div>
             </Modal>
             

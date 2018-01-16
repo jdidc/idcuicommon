@@ -21,7 +21,6 @@
             :exportPageSize="10"
             :url="url"
             type="server"
-            :condition="condition"
             :columns="columns1"
             highlight-row
         >
@@ -29,7 +28,7 @@
 
          <idc-table
             style="margin-top: 10px;"
-            ref="table" 
+            ref="table"
             :data="data"
             :pageSize="5"
             :pagination="true"     

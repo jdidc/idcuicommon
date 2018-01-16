@@ -138,7 +138,10 @@ export default {
             type: String
         },
         condition: {
-            type: Object
+            type: Object,
+            default(){
+                return {};
+            }
         },
         toolsOpen: {
             default: false

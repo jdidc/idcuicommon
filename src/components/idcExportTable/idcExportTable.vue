@@ -82,8 +82,9 @@
                 @on-page-size-change="pageSizeChange" 
                 @on-change="getData" 
                 :current.sync="page.currentPage" 
-                :total="page.total" 
-                show-total 
+                :total="page.total"
+                :page-size="page.pageSize"
+                show-total
                 show-elevator 
                 show-sizer
             ></Page>
@@ -94,7 +95,8 @@
                 @on-page-size-change="pageSizeChange" 
                 @on-change="getClientDataByPage" 
                 :current.sync="page.currentPage" 
-                :total="page.total" 
+                :total="page.total"
+                :page-size="page.pageSize"
                 show-total 
                 show-elevator 
                 show-sizer
@@ -126,11 +128,16 @@ export default {
             type: Boolean,
             default: false
         },
+        // 分页的每页显示数量
+        pageSize: {
+            type: Number,
+            default: 10
+        },
         url: {
             type: String
         },
         condition: {
-            type:Object
+            type: Object
         },
         toolsOpen: {
             default: false
@@ -215,7 +222,7 @@ export default {
             page: {
                 total: 0,
                 currentPage: 1,
-                pageSize: 10
+                pageSize: this.pageSize
             },
             showSlotHeader: true,
             showSlotFooter: true,

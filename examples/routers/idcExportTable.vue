@@ -31,6 +31,8 @@
             style="margin-top: 10px;"
             ref="table" 
             :data="data"
+            :pageSize="5"
+            :pagination="true"     
             :columns="columns1"
         >
         </idc-table>
@@ -49,51 +51,51 @@ export default {
                 created_at: '12312334',
                 type_name: 'address'
             },{
-                status: 1,
+                status: 2,
                 created_at: '123123',
                 type_name: 'address'
             },{
-                status: 1,
+                status: 3,
                 created_at: '123123',
                 type_name: 'address'
             },{
-                status: 1,
+                status: 4,
                 created_at: '123123',
                 type_name: 'address'
             },{
-                status: 1,
+                status: 5,
                 created_at: '123123',
                 type_name: 'address'
             },{
-                status: 1,
+                status: 6,
                 created_at: '123123',
                 type_name: 'address'
             },{
-                status: 1,
+                status: 7,
                 created_at: '123123',
                 type_name: 'address'
             },{
-                status: 1,
+                status: 8,
                 created_at: '123123',
                 type_name: 'address'
             },{
-                status: 1,
+                status: 9,
                 created_at: '123123',
                 type_name: 'address'
             },{
-                status: 1,
+                status: 10,
                 created_at: '123123',
                 type_name: 'address'
             },{
-                status: 1,
+                status: 11,
                 created_at: '123123',
                 type_name: 'adsf'
             },{
-                status: 1,
+                status: 12,
                 created_at: '123123',
                 type_name: 'asdf'
             },{
-                status: 1,
+                status: 13,
                 created_at: '123123',
                 type_name: 'dff'
             }],

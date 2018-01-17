@@ -31,9 +31,16 @@ import table2excel from '../../utils/table2excel';
 import ajax from '@/utils/ajax';
 export default {
     props: {
+        // 查询条件
         condition: {
             type: Object,
             required: true
+        },
+        columns: {
+            type: Array,
+            default() {
+                return [];
+            }
         },
         // 导出参数
         exportParams: {
@@ -47,7 +54,7 @@ export default {
         // 导出类型
         exportType: {
             type: String,
-            default: 'excel'
+            default: 'csv'
         },
         // 导出名字
         fileName: {
@@ -57,7 +64,6 @@ export default {
     },
     data() {
         return {
-            totalPage: 0,
             showExportModal: false,
             // 总记录数
             total: 0,
@@ -72,7 +78,8 @@ export default {
             // 导出数据集
             dataArr: [],
             hiddenData: [],
-            hiddenColumns: []
+            hiddenColumns: [],
+            fileExistFlag: 0
         };
     },
     methods: {
@@ -83,18 +90,93 @@ export default {
         },
         // 获得导出信息
         getInfo() {
-            let _this = this;
             this.reset();
-            ajax(this.condition).then(({ data }) => {
-                _this.showExportModal = true;
+            let params = {};
+            let data = {
+                page: 1,
+                pageSize: 1
+            };
+            Object.assign(params, this.condition, data);
+            ajax(params).then(({ data }) => {
+                this.showExportModal = true;
                 // 总条数
-                _this.total = data.total;
-                _this.columns = data.title;
-                // _this.step = 100;
+                this.total = data.total;
+                // 是否已经查询过该文件
+                this.fileExistFlag = data.fileExistFlag;
             });
+        },
+        // 创建iframe下载
+        downloadByIframe(url, data) {
+            if (this.condition.method === 'post') {
+                const iframeName = '__iframe_downloader__';
+                let iframe = document.createElement('iframe');
+                iframe.style.display = 'none';
+                iframe.name = iframeName;
+                document.body.appendChild(iframe);
+                iframe.src = url;
+                // 创建一个隐藏的form标签
+                const form = document.createElement('form');
+                form.style.display = 'none';
+                form.target = iframeName;
+                form.method = 'get';
+                form.acceptCharset = 'utf-8';
+                form.action = url;
+                // 通过form发送json数据请参考  https://darobin.github.io/formic/specs/json/
+                const traverse = (obj, key) => {
+                    key = key || '';
+                    const result = [];
+                    for (let prop in obj) {
+                        const value = obj[prop];
+                        typeof value === 'object'
+                            ? result.push.apply(
+                                  result,
+                                  traverse(value, key + '[' + prop + ']')
+                              )
+                            : result.push({
+                                  name: key ? key + '[' + prop + ']' : prop,
+                                  value: value
+                              });
+                    }
+                    return result;
+                };
+                const inputs = document.createDocumentFragment();
+                const fields = traverse(data);
+                fields.forEach(field => {
+                    const input = document.createElement('input');
+                    input.type = 'hidden';
+                    input.name = field.name;
+                    input.value = field.value;
+                    inputs.appendChild(input);
+                });
+                form.appendChild(inputs);
+                document.body.appendChild(form);
+                form.submit();
+                document.body.removeChild(form);
+            } else {
+                let params = '';
+                for (let key in data) {
+                    params += `${key}=${data[key]}&`;
+                }
+                params.substring(0, params.length - 2);
+                var IFrameRequest = document.createElement('iframe');
+                IFrameRequest.id = 'IFrameRequest';
+                IFrameRequest.src = `${url}?${params}`;
+                IFrameRequest.style.display = 'none';
+                document.body.appendChild(IFrameRequest);
+                document.body.removeChild(IFrameRequest);
+            }
+            this.percent = 100;
         },
         // 按页获取
         getDataByPage(event, page = 1) {
+            if (this.fileExistFlag === 1) {
+                this.downloadByIframe(
+                    'http://www.wangtie.idc.jd.com/v1.0/utilization/device/cacheExportData',
+                    this.condition.params
+                );
+                return;
+            }
+
             let _this = this;
             if (_this.dataArr.length == _this.total) {
                 this.reset();
@@ -107,10 +189,18 @@ export default {
             }
 
             if (this.exportParams != null) {
-                Object.assign(this.condition.data, this.exportParams);
+                if (this.condition.method == 'post') {
+                    Object.assign(this.condition.data, this.exportParams);
+                } else {
+                    Object.assign(this.condition.params, this.exportParams);
+                }
             }
-
-            ajax(this.condition).then(response => {
+            let params = {
+                page: page,
+                pageSize: this.exportPageSize
+            };
+            Object.assign(params, this.condition);
+            ajax(params).then(response => {
                 if (response.status != 200) {
                     console.log('错误啦!!', response.data.message);
                     return;

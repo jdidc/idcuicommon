@@ -16,9 +16,9 @@
             @on-data-callback="callback"
             ref="table" 
             border
-            :toolsOpen="true"
+            :tools-open="true"
             stripe
-            :exportPageSize="10"
+            :export-page-size="10"
             :url="url"
             type="server"
             :columns="columns1"
@@ -30,7 +30,7 @@
             style="margin-top: 10px;"
             ref="table"
             :data="data"
-            :pageSize="5"
+            :page-size="5"
             :pagination="true"     
             :columns="columns1"
         >

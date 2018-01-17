@@ -211,7 +211,7 @@ export default {
         // 导出类型
         exportType: {
             type: String,
-            default: 'excel'
+            default: 'csv'
         },
         // 导出名字
         fileName: {

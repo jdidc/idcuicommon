@@ -216,11 +216,11 @@ export default {
                     Object.assign(this.condition.params, this.exportParams);
                 }
             }
-            let params = {
-                page: page,
-                pageSize: this.exportPageSize
-            };
+            let params = {};
             Object.assign(params, this.condition);
+            params.params.pageSize = this.exportPageSize;
+            params.params.page = page;
+
             ajax(params).then(response => {
                 if (response.status != 200) {
                     console.log('错误啦!!', response.data.message);

@@ -114,8 +114,8 @@ export default {
                 page: 1,
                 pageSize: 1
             };
-
-            Object.assign(params, this.condition, data);
+            Object.assign(params, this.condition);
+            Object.assign(params.params, data);
             params.params.nExportFlag = 0;
             params.timeout = 1000 * 60;
             ajax(params).then(({ data }) => {

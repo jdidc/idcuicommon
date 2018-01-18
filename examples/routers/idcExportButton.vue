@@ -12,7 +12,7 @@
         <idc-export-button 
             :condition="objExport.condition"
             :columns="objExport.columns"
-            :showTotal="false"
+            :showTotal="true"
             :file-name="objExport.condition.params.depId+'&'+objExport.condition.params.begin+'&'+objExport.condition.params.end"
             :exportParams= "{nExportFlag: 1}"
         ></idc-export-button>
@@ -24,20 +24,20 @@ export default {
         return {
             objExport: {
                 condition: {
-                    // method: 'get',
-                    // url: '/v1.0/utilization/device/download',
-                    // params: {
-                    //     depId: 1001957,
-                    //     begin: '2017-12-05',
-                    //     end: '2017-12-12'
-                    // }
                     method: 'get',
-                    url: '/v1.0/utilization/device/report',
+                    url: '/v1.0/utilization/device/download',
                     params: {
-                        depId: 0,
-                        begin: '2017-12-04',
+                        depId: 1001957,
+                        begin: '2017-12-05',
                         end: '2017-12-12'
                     }
+                    // method: 'get',
+                    // url: '/v1.0/utilization/device/report',
+                    // params: {
+                    //     depId: 0,
+                    //     begin: '2017-12-04',
+                    //     end: '2017-12-12'
+                    // }
                 },
                 columns: [
                     { title: 'SN', key: 'sn' },

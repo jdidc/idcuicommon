@@ -118,6 +118,7 @@ export default {
             Object.assign(params.params, data);
             params.params.nExportFlag = 0;
             params.timeout = 1000 * 60;
+            params.params.lastTime = false;
             ajax(params).then(({ data }) => {
                 this.modalLoading = false;
                 // 总条数

@@ -221,6 +221,14 @@ export default {
             params.params.pageSize = this.exportPageSize;
             params.params.page = page;
 
+            // 判断最后一次导出时，给后端一个标志位。
+            let length = _this.dataArr.length;
+            if (length + _this.exportPageSize >= _this.total) {
+                params.params.lastTime = true;
+            } else {
+                params.params.lastTime = false;
+            }
+
             ajax(params).then(response => {
                 if (response.status != 200) {
                     console.log('错误啦!!', response.data.message);

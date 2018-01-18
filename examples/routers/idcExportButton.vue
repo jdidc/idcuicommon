@@ -27,7 +27,8 @@ export default {
                     method: 'get',
                     url: '/v1.0/utilization/device/download',
                     params: {
-                        depId: 530,
+                        // depId: 530,
+                        depId: 1001955,
                         begin: '2017-12-06',
                         end: '2017-12-20'
                     }

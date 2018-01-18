@@ -24,10 +24,17 @@ export default {
         return {
             objExport: {
                 condition: {
+                    // method: 'get',
+                    // url: '/v1.0/utilization/device/download',
+                    // params: {
+                    //     depId: 1001957,
+                    //     begin: '2017-12-05',
+                    //     end: '2017-12-12'
+                    // }
                     method: 'get',
-                    url: '/v1.0/utilization/device/download',
+                    url: '/v1.0/utilization/device/report',
                     params: {
-                        depId: 1001957,
+                        depId: 0,
                         begin: '2017-12-05',
                         end: '2017-12-12'
                     }

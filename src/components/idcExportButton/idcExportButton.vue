@@ -4,17 +4,23 @@
             <Icon type="ios-cloud-download-outline"></Icon>
             <span>导出</span>
         </Button>
-        <Modal v-model="showExportModal" :mask-closable="false" title="数据导出" class="idc-modal-no-footer">
-            <p>总共数据量：
-                <strong>
-                    <h4>{{total}}</h4>
-                </strong>
-            </p>
-            <p>已导出数据量：
-                <strong>
-                    <h4>{{dataArr.length}}</h4>
-                </strong>
-            </p>
+        <Modal v-model="showExportModal" :mask-closable="false" title="数据导出">
+            <div v-if="showTotal">
+                <p>总共数据量：
+                    <strong>
+                        <h4>{{total}}</h4>
+                    </strong>
+                </p>
+                <p>已导出数据量：
+                    <strong>
+                        <h4>{{dataArr.length}}</h4>
+                    </strong>
+                </p>
+            </div>
+            <div v-else>
+                <p>文件正在路上</p>
+            </div>
+            
             <Progress :percent="percent|numberFormat"></Progress>
             <div  slot="footer" class="btn-wrap">
                 <Button :loading="modalLoading"  type="primary" @click="getDataByPage">导出csv</Button>
@@ -96,10 +102,12 @@ export default {
         reset() {
             this.dataArr = [];
             this.percent = 0;
+            this.total = 0;
         },
         // 获得导出信息
         getInfo() {
             this.showExportModal = true;
+            this.modalLoading = true;
             this.reset();
             let params = {};
             let data = {
@@ -109,7 +117,9 @@ export default {
 
             Object.assign(params, this.condition, data);
             params.params.nExportFlag = 0;
+            params.timeout = 1000 * 60;
             ajax(params).then(({ data }) => {
+                this.modalLoading = false;
                 // 总条数
                 this.total = data.total;
                 // 是否已经查询过该文件

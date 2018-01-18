@@ -1,6 +1,6 @@
 {
   "name": "idcuicommon",
-  "version": "1.0.17",
+  "version": "1.0.18",
   "description": "idc常用组件",
   "main": "dist/idcuicommon.js",
   "scripts": {

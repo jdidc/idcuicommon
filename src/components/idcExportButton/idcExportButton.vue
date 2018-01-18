@@ -16,13 +16,13 @@
                 </strong>
             </p>
             <Progress :percent="percent|numberFormat"></Progress>
-            <div class="btn-wrap">
-                <Button type="primary" @click="getDataByPage">导出csv</Button>
+            <div  slot="footer" class="btn-wrap">
+                <Button :loading="modalLoading"  type="primary" @click="getDataByPage">导出csv</Button>
             </div>
 
             <!-- <Button type="primary" @click="exportExcel">导出Excel</Button> -->
             <Table v-show="false" ref="table" :data="hiddenData" :columns="hiddenColumns"></Table>
-            <span slot="footer"></span>
+            
         </Modal>
     </div>
 </template>
@@ -60,6 +60,13 @@ export default {
         fileName: {
             type: String,
             default: 'data'
+        },
+        // 是否显示总条数
+        showTotal: {
+            type: Boolean,
+            default() {
+                return true;
+            }
         }
     },
     data() {
@@ -79,7 +86,9 @@ export default {
             dataArr: [],
             hiddenData: [],
             hiddenColumns: [],
-            fileExistFlag: 0
+            fileExistFlag: 0,
+            // 导出中
+            modalLoading: false
         };
     },
     methods: {
@@ -90,19 +99,24 @@ export default {
         },
         // 获得导出信息
         getInfo() {
+            this.showExportModal = true;
             this.reset();
             let params = {};
             let data = {
                 page: 1,
                 pageSize: 1
             };
+
             Object.assign(params, this.condition, data);
+            params.params.nExportFlag = 0;
             ajax(params).then(({ data }) => {
-                this.showExportModal = true;
                 // 总条数
                 this.total = data.total;
                 // 是否已经查询过该文件
                 this.fileExistFlag = data.fileExistFlag;
+                if (data.fileExistFlag == 1) {
+                    this.strExitFilePath = data.filePath;
+                }
             });
         },
         // 创建iframe下载
@@ -153,27 +167,24 @@ export default {
                 form.submit();
                 document.body.removeChild(form);
             } else {
-                let params = '';
-                for (let key in data) {
-                    params += `${key}=${data[key]}&`;
-                }
-                params.substring(0, params.length - 2);
                 var IFrameRequest = document.createElement('iframe');
                 IFrameRequest.id = 'IFrameRequest';
-                IFrameRequest.src = `${url}?${params}`;
+                IFrameRequest.src = url;
                 IFrameRequest.style.display = 'none';
                 document.body.appendChild(IFrameRequest);
-                document.body.removeChild(IFrameRequest);
+                // document.body.removeChild(IFrameRequest);
             }
             this.percent = 100;
+            setTimeout(() => {
+                this.modalLoading = false;
+                this.showExportModal = false;
+            }, 2000);
         },
         // 按页获取
         getDataByPage(event, page = 1) {
+            this.modalLoading = true;
             if (this.fileExistFlag === 1) {
-                this.downloadByIframe(
-                    'http://www.wangtie.idc.jd.com/v1.0/utilization/device/cacheExportData',
-                    this.condition.params
-                );
+                this.downloadByIframe(this.strExitFilePath);
                 return;
             }
 
@@ -208,11 +219,16 @@ export default {
                 // 进度条，步进
                 this.addPercent();
                 let data = response.data;
+                // 返回数据长度为0时，停止继续请求。
+                if (data.data.length == 0) {
+                    return;
+                }
                 _this.dataArr = _this.dataArr.concat(data.data);
 
                 if (_this.dataArr.length < _this.total) {
                     _this.getDataByPage(null, page + 1);
                 } else {
+                    this.modalLoading = false;
                     setTimeout(() => {
                         _this.exportData({
                             columns: _this.columns,

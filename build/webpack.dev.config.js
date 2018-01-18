@@ -46,7 +46,11 @@ module.exports = merge(webpackBaseConfig, {
         host: 'lcf6.idc.jd.com',
         proxy: {
             '/v1.0': {
-                target: 'http://lcf.idc.jd.com/',
+                target: 'http://wangtie.idc.jd.com/',
+                changeOrigin: true
+            },
+            '/NicoRobin': {
+                target: 'http://wangtie.idc.jd.com/',
                 changeOrigin: true
             }
         }

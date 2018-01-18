@@ -2,7 +2,7 @@
     <div>
         <Button @click="getInfo">
             <Icon type="ios-cloud-download-outline"></Icon>
-            <span>导出</span>
+            <slot>导出</slot>
         </Button>
         <Modal v-model="showExportModal" :mask-closable="false" title="数据导出">
             <div v-if="showTotal">

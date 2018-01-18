@@ -35,7 +35,7 @@ export default {
                     url: '/v1.0/utilization/device/report',
                     params: {
                         depId: 0,
-                        begin: '2017-12-05',
+                        begin: '2017-12-04',
                         end: '2017-12-12'
                     }
                 },

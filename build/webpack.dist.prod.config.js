@@ -24,7 +24,9 @@ module.exports = merge(webpackBaseConfig, {
             commonjs: 'vue',
             commonjs2: 'vue',
             amd: 'vue'
-        }
+        },
+        'axios': 'axios',
+        'iview': 'iview'
     },
     plugins: [
         // @todo

@@ -24,6 +24,8 @@
     "vue": "^2.5.2"
   },
   "devDependencies": {
+    "axios": "^0.17.1",
+    "iview": "^2.7.4",
     "autoprefixer-loader": "^2.0.0",
     "babel": "^6.23.0",
     "babel-core": "^6.26.0",
@@ -70,8 +72,4 @@
     "node": ">= 6.0.0",
     "npm": ">= 3.0.0"
   },
-  "dependencies": {
-    "axios": "^0.17.1",
-    "iview": "^2.7.4"
-  }
 }

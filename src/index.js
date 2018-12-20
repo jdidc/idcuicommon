@@ -1,10 +1,8 @@
 import idcExportButton from './components/idcExportButton';
-import idcExportTable from './components/idcExportTable';
-import testButton from './components/testButton';
+import Table from './components/Table';
 
 const components = {
-    testButton,
-    idcTable: idcExportTable,
+    idcTable: Table,
     idcExportButton
 };
 

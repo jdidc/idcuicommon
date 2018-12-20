@@ -22,12 +22,8 @@ const router = new VueRouter({
             component: require('./routers/idcHeader.vue')
         },
         {
-            path: '/idc_export_table',
-            component: require('./routers/idcExportTable.vue')
-        },
-        {
-            path: '/testButton',
-            component: require('./routers/testButton.vue')
+            path: '/Table',
+            component: require('./routers/Table.vue')
         },
         {
             path: '/idc_export_button',

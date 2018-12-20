@@ -29,16 +29,10 @@ li + li {
         <nav>
             <ul>
                 <li>
-                    <router-link to="/testButton">testButton</router-link>
+                    <router-link to="/Table">Table</router-link>
                 </li>
                 <li>
-                    <router-link to="/idc_export_table">idcExportTable</router-link>
-                </li>
-                <li>
-                    <router-link to="/idc_export_button">idcExportButton</router-link>
-                </li>
-                <li>
-                    <router-link to="/idcHeader">idcHeader</router-link>
+                    <router-link to="/idc_export_button">exportButton</router-link>
                 </li>
             </ul>
         </nav>

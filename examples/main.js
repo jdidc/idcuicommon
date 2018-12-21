@@ -7,6 +7,7 @@ import App from './app.vue';
 import IdcCommonUI from '../src/index';
 import iView from 'iview';
 import 'iview/dist/styles/iview.css';
+
 Vue.use(iView);
 Vue.use(VueRouter);
 Vue.use(IdcCommonUI);

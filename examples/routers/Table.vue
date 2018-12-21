@@ -10,6 +10,7 @@
     </div>
 
     <idc-table
+style="margin-bottom: 10px;"
       :columns="columns1"
       :export-page-size="10"
       :tools-open="true"
@@ -33,6 +34,18 @@
       ref="table"
       style="margin-top: 10px;"
     ></idc-table>
+    <div style="margin-top: 10px;">
+      <idc-table
+        :export="true"
+        exportName="测试"
+        :columns="columns1"
+        stripe
+        :data="data"
+        ref="table"
+      >
+      </idc-table>
+    </div>
+    
   </div>
 </template>
 <script>
@@ -46,22 +59,22 @@ export default {
       data: [
         {
           status: 1,
-          created_at: "12312334",
+          created_at: 123123123,
           type_name: "address"
         },
         {
           status: 2,
-          created_at: "123123",
+          created_at: "01203123123\t",
           type_name: "address"
         },
         {
           status: 3,
-          created_at: "123123",
+          created_at: "12312323874982734987234",
           type_name: "address"
         },
         {
           status: 4,
-          created_at: "123123",
+          created_at: "1231247298347928347923743\t",
           type_name: "address"
         },
         {
@@ -112,7 +125,6 @@ export default {
       ],
       columns1: [
         {
-          title: "序号",
           type: "selection"
         },
         {

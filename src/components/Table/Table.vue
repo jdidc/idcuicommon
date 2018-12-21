@@ -41,8 +41,11 @@
 
       <div @click="toggleTools" class="icon">
         <Tooltip :content="'点击' + (showTools ? '收起' : '展开')" placement="top" transfer>
-          <i aria-hidden="true" class="fa fa-cog"></i>
+          <Icon type="ios-download-outline" />
         </Tooltip>
+        <Icon type="ios-expand" />
+        <Icon type="ios-contract" />
+        <Icon type="ios-construct-outline" />
       </div>
     </div>
 

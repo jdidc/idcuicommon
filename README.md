@@ -1,8 +1,34 @@
-# IdcCommonUI
+# strong-compo
 
-    该项目是为了定义一个自定义组件库，统一管理公共组件，是项目的组件依赖关系更加清晰。
+## Project setup
+```
+yarn install
+```
 
-## 现有组件
+### Compiles and hot-reloads for development
+```
+yarn run serve
+```
 
-- idcExportButton 导出组件
-- idcExportTable 集成了 Table Page 和自定义的导出功能的复合Table
+### Compiles and minifies for production
+```
+yarn run build
+```
+
+### Run your tests
+```
+yarn run test
+```
+
+### Lints and fixes files
+```
+yarn run lint
+```
+
+### Run your unit tests
+```
+yarn run test:unit
+```
+
+### Customize configuration
+See [Configuration Reference](https://cli.vuejs.org/config/).

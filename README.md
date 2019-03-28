@@ -1,34 +1,15 @@
-# strong-compo
+# idcuicommon
 
-## Project setup
-```
-yarn install
-```
+## 定位
+业务侧的通用组件库，来源于业务同时主推业务成长。
 
-### Compiles and hot-reloads for development
-```
-yarn run serve
-```
+## 组件列表
+- ExportButton
 
-### Compiles and minifies for production
-```
-yarn run build
-```
+### ExportButton
 
-### Run your tests
-```
-yarn run test
-```
-
-### Lints and fixes files
-```
-yarn run lint
-```
-
-### Run your unit tests
-```
-yarn run test:unit
-```
-
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+#### 特点
+1. 接口导出、客户端导出。
+2. 支持导出格式**xlsx**、**csv**、**txt**。
+3. 支持button名字、样式自定义。
+4. 后续支持复杂表头的导出。

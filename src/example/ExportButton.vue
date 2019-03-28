@@ -27,7 +27,7 @@
       style="margin-left: 20px;"
       title="导出csv"
     />
-    
+
   </div>
 </template>
 <script>
@@ -62,7 +62,7 @@ export default {
   },
   methods: {
     request(page, pageSize) {
-      return new Promise((res, rej) => {
+      return new Promise((res) => {
         setTimeout(() => {
           let i = 0;
           let data = [];

@@ -2,7 +2,7 @@ const isProduction = process.env.NODE_ENV === 'production';
 const isPublish = false;
 module.exports = {
   publicPath: isProduction ? '/idcuicommon/' : '/',
-  outputDir: 'docs',
+  outputDir: isPublish ? 'dist' : 'docs',
   chainWebpack: (config) => {
     if (isPublish) {
       config.externals({
@@ -12,7 +12,7 @@ module.exports = {
           commonjs2: 'vue',
           amd: 'vue',
         },
-        axios: 'axios',
+        xlsx: 'xlsx',
         iview: 'iview',
       });
     }

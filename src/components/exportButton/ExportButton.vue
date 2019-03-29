@@ -100,6 +100,7 @@ export default {
   },
   methods: {
     async setTotal() {
+      this.reset();
       if(this.loading || this.disabled){
         return;
       }
@@ -126,7 +127,6 @@ export default {
         this.cloneTotal = this.total;
         this.processModalShow = true;
       } else {
-        this.reset();
         let num = await this.getTotal();
         this.cloneTotal = num;
         this.processModalShow = true;

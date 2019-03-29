@@ -15,6 +15,10 @@
     "type": "git",
     "url": "http://git.jd.com/jdidc/idcuicommon"
   },
+  "license": { 
+    "type": "MIT",
+    "url" : "https://www.opensource.org/licenses/mit-license.php"
+  },
   "files": [
     "dist/*",
     "src/*",

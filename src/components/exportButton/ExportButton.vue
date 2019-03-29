@@ -16,6 +16,7 @@
 </template>
 <script>
 import processModal from './processModal';
+import {export_json_to_excel} from './Export2Excel'
 export default {
   name: "ExportButton",
   components: {
@@ -103,7 +104,6 @@ export default {
         return;
       }
       if (this.data.length > 0) {
-        const excel = await import("./Export2Excel");
         const tHeader = [];
         const filterVal = [];
         this.columns.forEach(item => {
@@ -113,7 +113,7 @@ export default {
 
         let data = this.formatJson(filterVal, this.data);
 
-        excel.export_json_to_excel({
+        export_json_to_excel({
           multiHeader: [],
           header: tHeader,
           data,
@@ -161,7 +161,6 @@ export default {
       let times = Math.ceil(this.cloneTotal / this.pageSize);
       let data = await this.getData(times);
 
-      const excel = await import("./Export2Excel");
       const tHeader = [];
       const filterVal = [];
       this.columns.forEach(item => {
@@ -171,7 +170,7 @@ export default {
 
       data = this.formatJson(filterVal, data);
 
-      excel.export_json_to_excel({
+      export_json_to_excel({
         multiHeader: [],
         header: tHeader,
         data,

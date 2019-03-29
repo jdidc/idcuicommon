@@ -1,8 +1,9 @@
-const isProduction = process.env.NODE_ENV === 'production';
+const isDev = process.env.NODE_ENV === 'development';
+
 // 发布的时候，手动将其改为true
-const isPublish = false;
+const isPublish = process.env.NODE_ENV === 'production';
 module.exports = {
-  publicPath: isProduction ? '/idcuicommon/' : '/',
+  publicPath: isDev ? '/idcuicommon/' : '/',
   outputDir: isPublish ? 'dist' : 'docs',
   chainWebpack: (config) => {
     if (isPublish) {

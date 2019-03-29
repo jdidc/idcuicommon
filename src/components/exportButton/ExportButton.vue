@@ -136,7 +136,7 @@ export default {
     getData(times) {
       return new Promise(resolve => {
         let data = [];
-        let i = 0;
+        let i = 1;
         let self = this;
         function request() {
           if (!self.exporting) self.exporting = true;
@@ -145,7 +145,7 @@ export default {
             i++;
             data.push(...res);
             self.currentNumber = data.length;
-            if (i >= times) {
+            if (i > times) {
               resolve(data);
               return;
             }

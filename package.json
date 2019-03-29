@@ -5,8 +5,8 @@
   "author": "llccing",
   "scripts": {
     "serve": "vue-cli-service serve",
-    "build": "vue-cli-service build   --mode development",
-    "build-bundle": "vue-cli-service build  --mode production --target lib  --name idcuicommon ./src/components/index.js",
+    "build": "vue-cli-service build",
+    "build-bundle": "vue-cli-service build --target lib  --name idcuicommon ./src/components/index.js",
     "lint": "vue-cli-service lint",
     "test:unit": "vue-cli-service test:unit"
   },

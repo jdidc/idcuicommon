@@ -1,6 +1,6 @@
 const isProduction = process.env.NODE_ENV === 'production';
 // 发布的时候，手动将其改为true
-const isPublish = true;
+const isPublish = false;
 module.exports = {
   publicPath: isProduction ? '/idcuicommon/' : '/',
   outputDir: isPublish ? 'dist' : 'docs',

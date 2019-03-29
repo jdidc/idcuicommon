@@ -2,6 +2,9 @@
   <div>
     <h3>ajax导出</h3>
     <ExportButton :columns="columns" :getTotal="getTotal" :request="request"/>
+    <ExportButton style="margin-left: 20px;" :columns="columns" :request="request" :total="400" title="已知总数"/>
+    <ExportButton style="margin-left: 20px;" :columns="columns" :request="request" :total="400" title="设置loading" :loading="true"/>
+    <ExportButton style="margin-left: 20px;" :columns="columns" :request="request" :total="400" title="设置 disabled" :disabled="true"/>
     <Divider/>
 
     <h3>客户端导出</h3>
@@ -18,7 +21,7 @@
 
     <h3>自定义导出格式</h3>
     <ExportButton :columns="columns" :data="data" bookType="txt" filename="设备列表" title="导出txt"/>
-    
+
     <ExportButton
       :columns="columns"
       :data="data"
@@ -27,7 +30,6 @@
       style="margin-left: 20px;"
       title="导出csv"
     />
-
   </div>
 </template>
 <script>
@@ -62,7 +64,7 @@ export default {
   },
   methods: {
     request(page, pageSize) {
-      return new Promise((res) => {
+      return new Promise(res => {
         setTimeout(() => {
           let i = 0;
           let data = [];

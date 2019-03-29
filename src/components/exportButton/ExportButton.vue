@@ -1,13 +1,13 @@
 <template>
   <div @click="setTotal" class="button-wrapper">
     <slot>
-      <Button icon="md-download" type="primary">{{title}}</Button>
+      <Button :loading="loading" :disabled="disabled" icon="md-download" type="primary">{{title}}</Button>
     </slot>
     <processModal
       :currentNumber="currentNumber"
       :exporting="exporting"
       :percent="percent"
-      :total="total"
+      :total="cloneTotal"
       @startExport="startExport"
       v-if="modal"
       v-model="processModalShow"
@@ -15,20 +15,39 @@
   </div>
 </template>
 <script>
+import processModal from './processModal';
 export default {
   name: "ExportButton",
   components: {
-    processModal: () => import("./processModal")
+    processModal,
   },
   props: {
     request: {
       type: Function,
       required: false
     },
+    total: {
+      type: Number,
+      default(){
+        return 0
+      }
+    },
     getTotal: Function,
     pageSize: {
       default: 100,
       type: Number
+    },
+    loading: {
+      type: Boolean,
+      default(){
+        return false
+      }
+    },
+    disabled: {
+      type: Boolean,
+      default(){
+        return false
+      }
     },
     modal: {
       type: Boolean,
@@ -71,7 +90,7 @@ export default {
   },
   data() {
     return {
-      total: 0,
+      cloneTotal: 0,
       percent: 0,
       currentNumber: 0,
       processModalShow: false,
@@ -80,6 +99,9 @@ export default {
   },
   methods: {
     async setTotal() {
+      if(this.loading || this.disabled){
+        return;
+      }
       if (this.data.length > 0) {
         const excel = await import("./Export2Excel");
         const tHeader = [];
@@ -100,10 +122,13 @@ export default {
           autoWidth: this.autoWidth,
           bookType: this.bookType
         });
+      } else if(this.total>0){
+        this.cloneTotal = this.total;
+        this.processModalShow = true;
       } else {
         this.reset();
         let num = await this.getTotal();
-        this.total = num;
+        this.cloneTotal = num;
         this.processModalShow = true;
       }
     },
@@ -133,10 +158,8 @@ export default {
 
     async startExport() {
       // 获得需要请求的次数
-      let times = Math.ceil(this.total / this.pageSize);
+      let times = Math.ceil(this.cloneTotal / this.pageSize);
       let data = await this.getData(times);
-
-      console.log("total data", data);
 
       const excel = await import("./Export2Excel");
       const tHeader = [];
@@ -174,12 +197,12 @@ export default {
 
     // num表示已经完成导入的数量
     addPercent() {
-      const per = 100 / Math.ceil(this.total / this.pageSize);
+      const per = 100 / Math.ceil(this.cloneTotal / this.pageSize);
       this.percent += per;
     },
 
     reset() {
-      this.total = 0;
+      this.cloneTotal = 0;
       this.percent = 0;
       this.currentNumber = 0;
     }

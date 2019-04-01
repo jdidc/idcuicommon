@@ -15,6 +15,7 @@ module.exports = {
         },
         xlsx: 'xlsx',
         iview: 'iview',
+        classnames: 'classnames',
       });
     }
   },

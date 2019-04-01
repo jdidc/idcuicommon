@@ -24,6 +24,7 @@
     "*.js"
   ],
   "dependencies": {
+    "classnames": "^2.2.6",
     "file-saver": "^2.0.1",
     "iview": "^3.3.3",
     "script-loader": "^0.7.2",
@@ -41,8 +42,8 @@
     "eslint": "^5.8.0",
     "eslint-plugin-vue": "^5.0.0",
     "fibers": "^3.1.1",
-    "sass": "^1.17.2",
-    "sass-loader": "^7.1.0",
+    "less": "^3.9.0",
+    "less-loader": "^4.1.0",
     "vue-router": "^3.0.2",
     "vue-template-compiler": "^2.5.21"
   }

@@ -1,7 +1,10 @@
 import ExportButton from './exportButton';
-
+import DescriptionList from './DescriptionListV2';
+const { Description } = DescriptionList;
 const Components = {
-  ExportButton
+  ExportButton,
+  DescriptionList,
+  Description
 }
 
 const install = function(Vue) {

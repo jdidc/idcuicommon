@@ -1,6 +1,12 @@
 <template>
   <div :class="calsses">
     <p class="title" v-if="title">{{title}}</p>
+    <div v-if="hasButtonsSlot && title" class="buttons-wrapper">
+      <slot name="buttons"></slot>
+    </div>
+    <div v-else-if="hasButtonsSlot && !title" class="buttons-wrapper-no-title">
+      <slot name="buttons"></slot>
+    </div>
     <!-- <Row :gutter="gutter"> -->
     <Row>
       <slot></slot>
@@ -38,6 +44,10 @@ export default {
       });
       return clsString;
     },
+
+    hasButtonsSlot () {
+      return !!this.$slots['buttons']
+    }
   },
 };
 </script>

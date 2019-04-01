@@ -4,6 +4,7 @@
 
 .descriptionList {
   // offset the padding-bottom of last row
+  position: relative;
   :global {
     .ivu-row {
       margin-bottom: -16px;
@@ -24,6 +25,17 @@
     color: @heading-color;
     font-weight: 600;
     font-size: 14px;
+  }
+
+  .buttons-wrapper{
+    position: absolute;
+    right: 0;
+    top: 0;
+  }
+
+  .buttons-wrapper-no-title{
+    text-align: right;
+    margin-bottom: 5px;
   }
 
   .term {

@@ -40,7 +40,9 @@
         :key="item.id"
         :term="item.title"
         v-for="item in tableColumns"
-      >{{tableData[0][item.key]}}</Description>
+      >
+        {{tableData[0][item.key]}}
+      </Description>
     </DescriptionList>
 
     <p style="margin-top: 16px;">
@@ -99,6 +101,23 @@
       </Description>
     </DescriptionList>
     <Divider/>
+
+
+    <h3>6. 针对firefox调整，增加span标签，否则内容为空时，会窜行。</h3>
+    <Divider/>
+    <DescriptionList title="基本信息">
+      <Description
+        :key="item.id"
+        :term="item.title"
+        v-for="item in tableColumns"
+      >
+       
+      <span>
+         {{tableData[0][item.key]}}
+      </span>
+      </Description>
+    </DescriptionList>
+    <Divider/>
   </div>
 </template>
 <script>
@@ -132,7 +151,7 @@ export default {
       tableData: [
         {
           id: "100000001",
-          type: "服务器故障单",
+          type: "",
           status: "进行中",
           youxian: "优先",
           time: "2019-08-08 08:08:08"

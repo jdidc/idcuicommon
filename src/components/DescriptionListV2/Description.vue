@@ -2,10 +2,8 @@
   <Col :xs="xs" :sm="sm" :md="md">
     <div v-if="term" class="term">{{term}}</div>
     <!-- eslint-disable-next-line -->
-    <div class="detail" :class="{'no-term': !term}">
-      <div>
-        <slot></slot>
-      </div>
+    <div v-if="hasSlot" class="detail" :class="{'no-term': !term}">
+      <slot></slot>
     </div>
   </Col>
 </template>
@@ -35,10 +33,12 @@ export default {
       return responsive[column].md;
     },
     hasSlot() {
-      if (!this.$slots.default) {
-        return 0;
+      const defaultSlot = this.$slots.default[0]
+      // 内容为空，视为没有slot，排除嵌套其他组件的情况
+      if(!defaultSlot.componentOptions && defaultSlot.text.trim() === ''){
+        return false
       }
-      return true;
+      return !!this.$slots.default
     },
   },
 };

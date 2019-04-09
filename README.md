@@ -19,4 +19,5 @@
 2. ```npm version patch|minor|major```升级版本号
 3. 修改vue.config.js ```is_publish```改为```true```，执行 ```yarn build-bundle```构建内容输出到dist目录中。
 4. 执行```git checkout .```，将```vue.config.js```文件恢复，执行```yarn build```，更新pages页面。
-5. ```git push github master```，发布项目。
+5. ```npm publish```，发布项目
+5. ```git push github master```，push代码到版本库。

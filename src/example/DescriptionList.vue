@@ -101,23 +101,7 @@
       </Description>
     </DescriptionList>
     <Divider/>
-
-
-    <h3>6. 针对firefox调整，增加span标签，否则内容为空时，会窜行。</h3>
-    <Divider/>
-    <DescriptionList title="基本信息">
-      <Description
-        :key="item.id"
-        :term="item.title"
-        v-for="item in tableColumns"
-      >
-       
-      <span>
-         {{tableData[0][item.key]}}
-      </span>
-      </Description>
-    </DescriptionList>
-    <Divider/>
+    
   </div>
 </template>
 <script>

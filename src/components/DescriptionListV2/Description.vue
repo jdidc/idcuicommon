@@ -3,7 +3,9 @@
     <div v-if="term" class="term">{{term}}</div>
     <!-- eslint-disable-next-line -->
     <div class="detail" :class="{'no-term': !term}">
-      <slot></slot>
+      <div>
+        <slot></slot>
+      </div>
     </div>
   </Col>
 </template>

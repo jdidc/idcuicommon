@@ -33,9 +33,9 @@ export default {
       return responsive[column].md;
     },
     hasSlot() {
-      const defaultSlot = this.$slots.default[0]
+      const defaultSlot = this.$slots.default
       // 内容为空，视为没有slot，排除嵌套其他组件的情况
-      if(!defaultSlot.componentOptions && defaultSlot.text && defaultSlot.text.trim() === ''){
+      if(!defaultSlot || !defaultSlot[0].componentOptions && defaultSlot[0].text && defaultSlot[0].text.trim() === ''){
         return false
       }
       return !!this.$slots.default

@@ -35,7 +35,7 @@ export default {
     hasSlot() {
       const defaultSlot = this.$slots.default[0]
       // 内容为空，视为没有slot，排除嵌套其他组件的情况
-      if(!defaultSlot.componentOptions && defaultSlot.text.trim() === ''){
+      if(!defaultSlot.componentOptions && defaultSlot.text && defaultSlot.text.trim() === ''){
         return false
       }
       return !!this.$slots.default

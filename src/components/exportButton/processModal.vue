@@ -45,7 +45,7 @@ export default {
       }else if(this.currentNumber < this.total){
         return '数据获取中';
       }else{
-        return '以获取，正在下载';
+        return '已下载';
       }
     }
   },

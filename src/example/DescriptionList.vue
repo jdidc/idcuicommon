@@ -101,6 +101,35 @@
       </Description>
     </DescriptionList>
     <Divider/>
+
+
+
+    <h3>7. 嵌套 tabs 再嵌套表格，并且指定某些操作；增加类名，调整buttons slot位置</h3>
+    <Divider/>
+    <DescriptionList title="基本信息" className="tab-table">
+      <template slot="buttons">
+        <Button type="primary">导出</Button>
+        <Poptip confirm title="是否确认忽略？">
+          <Button style="margin-left: 10px" type="info">批量设置关机</Button>
+        </Poptip>
+        <Button style="margin-left: 10px" type="info">干点啥</Button>
+        <Button style="margin-left: 10px" type="info">干点啥</Button>
+      </template>
+      <Description :col="1">
+        <Tabs type="card">
+          <TabPane label="table1">
+            <Table :columns="tableColumns" :data="tableData"></Table>
+          </TabPane>
+          <TabPane label="table2">
+            <Table :columns="tableColumns" :data="tableData"></Table>
+          </TabPane>
+          <TabPane label="table3">
+            <Table :columns="tableColumns" :data="tableData"></Table>
+          </TabPane>
+        </Tabs>
+      </Description>
+    </DescriptionList>
+    <Divider/>
     
   </div>
 </template>
@@ -145,3 +174,9 @@ export default {
   }
 };
 </script>
+<style scoped>
+.tab-table >>> .buttons-wrapper {
+  top: 30px;
+  z-index: 2;
+}
+</style>
